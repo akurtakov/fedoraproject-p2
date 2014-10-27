@@ -280,7 +280,12 @@ public class InstallerTest extends RepositoryTest {
 						LinkOption.NOFOLLOW_LINKS));
 				assertEquals("eclipse", dropinSubdir.getFileName().toString());
 
+				boolean hasFragment = false;
 				for (Path categoryPath : Files.newDirectoryStream(dropinSubdir)) {
+				    if (categoryPath.getFileName().toString().equals("fragment.info")) {
+				        hasFragment = true;
+				        continue;
+				    }
 					assertTrue(Files.isDirectory(categoryPath,
 							LinkOption.NOFOLLOW_LINKS));
 					String cat = categoryPath.getFileName().toString();
@@ -311,6 +316,7 @@ public class InstallerTest extends RepositoryTest {
 							fail();
 					}
 				}
+				assertTrue(hasFragment);
 			}
 		}
 	}
